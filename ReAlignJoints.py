@@ -24,6 +24,9 @@ def lookAt(currentJoint, targetJoint):
     # clear orient channel
     cmds.joint(currentJoint, edit=True, o=(0, 0, 0));
 
+    # clear rotate channel
+    cmds.xform(currentJoint, ro=(0, 0, 0), r=False);
+
     # create a locator
     tempLocator = cmds.spaceLocator()[0];
     currentJointPosition = cmds.joint(currentJoint, p=True, q=True);
@@ -59,6 +62,12 @@ def attachJoints(jointList):
 
         # parent the joint
         cmds.parent(currentJoint, parentJoint);
+
+        # reset end joint
+        if i == listSize - 1:
+            cmds.joint(currentJoint, edit=True, o=(0, 0, 0));
+            cmds.xform(currentJoint, ro=(0, 0, 0), r=False);
+
     return;
 
 # stores all the joints selected (child joints included)
